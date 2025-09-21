@@ -1,2 +1,4 @@
-2
-1
+#!/usr/bin/env bash
+# Displays sockets and where they belong.
+
+ss -tulnp

@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Script to modify your home IP configuration
+
+HOSTS_FILE="/etc/hosts"
+
+# Create a backup of the original /etc/hosts if it doesn't already exist
+BACKUP="/etc/hosts.bak"
+if [ ! -f "$BACKUP" ]; then
+    sudo cp "$HOSTS_FILE" "$BACKUP"
+    echo "Backup saved at $BACKUP"
+fi
+
+# Delete any existing entries for localhost and facebook.com to prevent duplicates
+sudo sed -i '/\slocalhost$/d' "$HOSTS_FILE"
+sudo sed -i '/\sfacebook\.com$/d' "$HOSTS_FILE"
+
+# Append the new IP mappings
+echo "127.0.0.2 localhost" | sudo tee -a "$HOSTS_FILE" > /dev/null
+echo "8.8.8.8 facebook.com" | sudo tee -a "$HOSTS_FILE" > /dev/null
+
+echo "The /etc/hosts file has been updated with the following entries:"
+grep -E 'localhost$|facebook\.com$' "$HOSTS_FILE"

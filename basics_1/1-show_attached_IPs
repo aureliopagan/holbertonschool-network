@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# list connected IP addresses
+# Print all IPv4 addresses, including localhost, one per line
+ifconfig | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
